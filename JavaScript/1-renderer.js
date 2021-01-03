@@ -40,9 +40,12 @@ class HtmlRenderer extends Renderer {
 
   table(array) {
     const columns = Object.keys(array[0]);
-    const header = columns.map(s => `<th>${s}</th>`);
-    const rows = array.map(obj => columns.map(col => `<td>${obj[col]}</td>`));
-    const tr = cells => `<tr>${cells.join('')}</tr>`;
+    const header = columns.map((s) => `<th>${s}</th>`);
+    const rows = array.map((obj) => columns.map((col) => {
+      const cell = obj[col];
+      return `<td>${cell}</td>`;
+    }));
+    const tr = (cells) => `<tr>${cells.join('')}</tr>`;
     const result = [header].concat(rows).map(tr).join('\n');
     this.output.push(`<table>\n${result}\n</table>`);
   }
@@ -59,10 +62,10 @@ class MarkdownRenderer extends Renderer {
 
   table(array) {
     const columns = Object.keys(array[0]);
-    const header = columns.map(s => `${s}`);
+    const header = columns.map((s) => `${s}`);
     const separator = columns.map(() => '---');
-    const rows = array.map(obj => columns.map(col => `${obj[col]}`));
-    const tr = cells => `${cells.join(' | ')}`;
+    const rows = array.map((obj) => columns.map((col) => `${obj[col]}`));
+    const tr = (cells) => `${cells.join(' | ')}`;
     const result = [header, separator].concat(rows).map(tr).join(' |\n| ');
     this.output.push('| ' + result + ' |\n');
   }
