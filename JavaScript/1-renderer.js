@@ -41,10 +41,12 @@ class HtmlRenderer extends Renderer {
   table(array) {
     const columns = Object.keys(array[0]);
     const header = columns.map((s) => `<th>${s}</th>`);
-    const rows = array.map((obj) => columns.map((col) => {
-      const cell = obj[col];
-      return `<td>${cell}</td>`;
-    }));
+    const rows = array.map((obj) =>
+      columns.map((col) => {
+        const cell = obj[col];
+        return `<td>${cell}</td>`;
+      }),
+    );
     const tr = (cells) => `<tr>${cells.join('')}</tr>`;
     const result = [header].concat(rows).map(tr).join('\n');
     this.output.push(`<table>\n${result}\n</table>`);
@@ -121,7 +123,7 @@ persons.generate({
     { name: 'Ibn Arabi', city: 'Murcia', born: 1165 },
     { name: 'Mao Zedong', city: 'Shaoshan', born: 1893 },
     { name: 'Rene Descartes', city: 'La Haye en Touraine', born: 1596 },
-  ]
+  ],
 });
 persons.print();
 
@@ -135,6 +137,6 @@ letter.generate({
   content: `When you wake up in the morning, tell yourself:
     The people I deal with today will be meddling, ungrateful,
     arrogant, dishonest, jealous, and surly. They are like this
-    because they can’t tell good from evil.`
+    because they can’t tell good from evil.`,
 });
 letter.print();
